@@ -51,20 +51,20 @@ public class PlayerController : MonoBehaviour
         float dist = (cam.transform.position - transform.position).magnitude;
         if(state == 1)
         {
-            detectionAmt += 10 / dist;
+            detectionAmt += 8000 / (dist * dist) * Time.deltaTime ;
         }
         if (state == 2)
         {
-            detectionAmt += 20 / dist;
+            detectionAmt += 8000 / (dist * dist) * Time.deltaTime;
         }
 
-        if (detectionAmt > 100)
+        if (detectionAmt > 254)
         {
             rm.Respawn();
             Respawn();
             return;
         }
-        if (detectionAmt > 20)
+        if (detectionAmt > 100)
         {
             rm.Ping(transform.position);
         }
@@ -86,7 +86,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Escape))
         {
-            SceneManager.LoadScene(0);
+            //SceneManager.LoadScene(0);
         }
 
     }
@@ -96,8 +96,7 @@ public class PlayerController : MonoBehaviour
         if (detectionAmt > 0)
         {
             detectionAmt -= 10 * Time.deltaTime;
-            //int cnum = Mathf.CeilToInt(255 * detectionAmt / 100);
-            c = new Vector4(detected.r * detectionAmt / 100, detected.g * detectionAmt / 100, detected.b * detectionAmt / 100, 1);
+            c = new Vector4(detectionAmt/100, 0, 0, 1);
         }
         return c;
     }

@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 5641876285804185168}
   - component: {fileID: 5641876285804185169}
   - component: {fileID: 5641876285804185182}
-  - component: {fileID: 5641876285804185183}
   - component: {fileID: 5641876285804185180}
+  - component: {fileID: 7551912494892726397}
   m_Layer: 0
   m_Name: Flashbang
   m_TagString: Untagged
@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 66f1d4e0f24b9405cbd5106d58906b05, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -99,20 +99,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5641876285804185183
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5641876285804185181}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4cee3db1ff354120aa3d9b8927bc32d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  FuseTime: 0.5
-  explosion: {fileID: 767081348809092639, guid: 0713611956217415d9cc1deacbfd4b72, type: 3}
 --- !u!54 &5641876285804185180
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -129,3 +115,17 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 8
   m_CollisionDetection: 0
+--- !u!114 &7551912494892726397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5641876285804185181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf66d34553a014a2b9f75fab2122644a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FuseTime: 0.5
+  explosion: {fileID: 767081348809092639, guid: 0713611956217415d9cc1deacbfd4b72, type: 3}

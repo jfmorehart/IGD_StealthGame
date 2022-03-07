@@ -39,9 +39,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 983219171063726574}
     m_Modifications:
+    - target: {fileID: 6097191036640694794, guid: f555a92ee1a614f9b971d07a92419d36, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6097191036796353225, guid: f555a92ee1a614f9b971d07a92419d36, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6097191036966825197, guid: f555a92ee1a614f9b971d07a92419d36, type: 3}
       propertyPath: m_Name
       value: Elevator
+      objectReference: {fileID: 0}
+    - target: {fileID: 6097191036966825197, guid: f555a92ee1a614f9b971d07a92419d36, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6097191036966825199, guid: f555a92ee1a614f9b971d07a92419d36, type: 3}
       propertyPath: m_RootOrder
@@ -85,6 +97,30 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6097191036966825199, guid: f555a92ee1a614f9b971d07a92419d36, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6097191037232593802, guid: f555a92ee1a614f9b971d07a92419d36, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6097191037519485572, guid: f555a92ee1a614f9b971d07a92419d36, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6097191037709820519, guid: f555a92ee1a614f9b971d07a92419d36, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6097191037828567897, guid: f555a92ee1a614f9b971d07a92419d36, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6097191037828567903, guid: f555a92ee1a614f9b971d07a92419d36, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6097191038424334779, guid: f555a92ee1a614f9b971d07a92419d36, type: 3}
+      propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

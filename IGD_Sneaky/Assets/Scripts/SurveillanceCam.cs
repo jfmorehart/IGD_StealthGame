@@ -30,6 +30,12 @@ public class SurveillanceCam : MonoBehaviour
     private float Rdir;
     public float turnfraction;
 
+
+    //Emp
+    private int disableTime = 1;
+    private Light rlight;
+    private bool notEmp;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -40,6 +46,27 @@ public class SurveillanceCam : MonoBehaviour
         Rdir = forward;
         rm = GameObject.FindGameObjectWithTag("Manager").GetComponent<RoomControl>();
         rm.Register(this);
+        rlight = GetComponentInChildren<Light>();
+        notEmp = true;
+    }
+    public void Pop()
+    {
+        StartCoroutine(Disable());
+        Debug.Log("pop");
+    }
+
+    IEnumerator Disable()
+    {
+        notEmp = false;
+        rlight.enabled = false;
+        turnfraction = 0.1f;
+        Debug.Log("cam disabled");
+        yield return new WaitForSeconds(disableTime);
+        Debug.Log("enabled");
+        notEmp = true;
+        rlight.enabled = true;
+        turnfraction = 40f;
+        yield break;
     }
 
     // Update is called once per frame
@@ -64,7 +91,11 @@ public class SurveillanceCam : MonoBehaviour
         float currot = Mathf.Atan2(-Rotater.transform.right.y, -Rotater.transform.right.x) * Mathf.Rad2Deg;
         if (Mathf.Abs(DifferenceFinder(deltarot, currot)) < lightWidthdeg)
         {
-            playa.GetComponent<PlayerController>().SeeYa(gameObject);
+            if (notEmp)
+            {
+                playa.GetComponent<PlayerController>().SeeYa(gameObject);
+            }
+        
         }
     }
     void Update()
