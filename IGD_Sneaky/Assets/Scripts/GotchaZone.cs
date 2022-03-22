@@ -15,7 +15,6 @@ public class GotchaZone : MonoBehaviour
         {
             Vector3 delta = collision.gameObject.transform.position - eye.transform.position;
 
-
             if (Physics.Raycast(eye.transform.position + delta.normalized, delta, out RaycastHit hit, delta.magnitude + 1))
             {
                 if (hit.collider.gameObject.CompareTag("Player"))
@@ -32,12 +31,13 @@ public class GotchaZone : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            Debug.Log("player there");
             Vector3 delta = collision.gameObject.transform.position - eye.transform.position;
 
             //Returns true even when out of camera's viewangle, fix in surveil
             if (Physics.Raycast(eye.transform.position + delta.normalized, delta, out RaycastHit hit, delta.magnitude))
             {
-                
+                Debug.Log(hit.collider.gameObject);
                 if (hit.collider.gameObject.CompareTag("Player"))
                 {
                     eye.GetComponent<SurveillanceCam>().Spotted(hit.collider.gameObject);

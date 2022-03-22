@@ -9,11 +9,12 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     private MeshRenderer ren;
     private UIData ui;
+    private AudioSource source;
+    public AudioClip rewind;
 
     //Movement Stats
     [Header("Movement")]
     public int speed;
-    public int sprintspeed;
     public float drag;
     public float accel;
     public bool canMove = true;
@@ -35,6 +36,11 @@ public class PlayerController : MonoBehaviour
     public GameObject flashbang;
     public float throwForce;
     public float maxThrow;
+    private bool dashing;
+    public float dashDuration;
+    public float dashMult;
+    private float lastDashtime;
+    public float dashCooldown;
 
     // Start is called before the first frame update
     void Start()
@@ -44,6 +50,10 @@ public class PlayerController : MonoBehaviour
         rm = GameObject.FindGameObjectWithTag("Manager").GetComponent<RoomControl>();
         start = transform.position;
         ui = GameObject.FindGameObjectWithTag("UI").GetComponent<UIData>();
+
+
+        source = GetComponent<AudioSource>();
+
     }
     public void SeeYa(GameObject cam)
     {
@@ -75,6 +85,8 @@ public class PlayerController : MonoBehaviour
         transform.position = start;
         detectionAmt = 0;
         ui.Died();
+        source.PlayOneShot(rewind);
+
     }
 
     // Update is called once per frame
@@ -105,7 +117,6 @@ public class PlayerController : MonoBehaviour
         wasd = Vector2.zero;
         if (canMove)
         {
-            
             if (Input.GetKey(KeyCode.W))
             {
                 wasd.y++;
@@ -123,18 +134,42 @@ public class PlayerController : MonoBehaviour
                 wasd.x++;
             }
             rb.velocity -= drag * Time.deltaTime * rb.velocity;
-            rb.velocity += accel * Time.deltaTime * (Vector3)wasd;
 
-            if (Input.GetKey(KeyCode.LeftShift))
+            if (dashing)
             {
-                rb.velocity = Vector2.ClampMagnitude(rb.velocity, sprintspeed);
+                rb.velocity += accel * Time.deltaTime * dashMult * (Vector3)wasd;
             }
             else
             {
-                rb.velocity = Vector2.ClampMagnitude(rb.velocity, speed);
+                rb.velocity += accel * Time.deltaTime * (Vector3)wasd;
             }
 
+
+            rb.velocity = Vector2.ClampMagnitude(rb.velocity, speed);
+            if (dashing)
+            {
+                rb.velocity *= dashMult;
+            }
+      
+
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                if(Time.time - lastDashtime > dashCooldown)
+                {
+                    StartCoroutine(Dash());
+                }
+            }
         }
+    }
+    IEnumerator Dash()
+    {
+        lastDashtime = Time.time;
+        dashing = true;
+        yield return new WaitForSeconds(dashDuration);
+        dashing = false;
+        yield break;
+
     }
     void Grenades()
     {
@@ -148,22 +183,24 @@ public class PlayerController : MonoBehaviour
         Vector2 mpos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 delta = mpos - (Vector2)transform.position;
 
-        //Check to make sure we wont throw through anything
-      
-       
-        if (!Physics.Raycast(transform.position, delta, out RaycastHit hit, 0.5f))
-        {
-            StartCoroutine(GrenadeTime());
-      
-            GameObject grenade = Instantiate(flashbang, (Vector2)transform.position + delta.normalized / 2, transform.rotation);
-            Vector2 throwDelta = Vector2.ClampMagnitude(delta, maxThrow);
-            grenade.GetComponent<Rigidbody>().AddForce(throwDelta * throwForce, ForceMode.Impulse);
-        }
-        else
-        {
-           //We hit a wall or smth, so wont throw the grenade
 
-        }
+
+        StartCoroutine(GrenadeTime());
+
+        GameObject grenade = Instantiate(flashbang, (Vector2)transform.position + delta.normalized / 2, transform.rotation);
+        Vector2 throwDelta = Vector2.ClampMagnitude(delta, maxThrow);
+        grenade.GetComponent<Rigidbody>().AddForce(throwDelta * throwForce, ForceMode.Impulse);
+
+        //Check to make sure we wont throw through anything (scrapped after we made them impacts)
+        //if (!Physics.Raycast(transform.position, delta, out RaycastHit hit, 0.5f))
+        //{
+
+        //}
+        //else
+        //{
+        //   //We hit a wall or smth, so wont throw the grenade
+
+        //}
     }
     IEnumerator GrenadeTime()
     {
@@ -179,5 +216,15 @@ public class PlayerController : MonoBehaviour
             yield break;
         }
 
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Trip"))
+        {
+            rm.Respawn();
+            Respawn();
+            //Somehow tell the player they sadly died
+        }
     }
 }

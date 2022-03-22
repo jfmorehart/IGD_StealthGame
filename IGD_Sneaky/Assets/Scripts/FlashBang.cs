@@ -14,9 +14,14 @@ public class FlashBang : GrenadeBase
 
     public override void Detonate()
     {
-        Destroy(gameObject);
         Instantiate(explosion, transform.position, transform.rotation);
         rm.Distract(transform.position);
-       
+
+        if (sauce != null)
+        {
+            sauce.PlayOneShot(boom, boomvol);
+        }
+        Destroy(gameObject);
+
     }
 }

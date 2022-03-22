@@ -5,8 +5,9 @@ using UnityEngine;
 public class RoomControl : MonoBehaviour
 {
     public List<SurveillanceCam> Cams = new List<SurveillanceCam>();
+    public List<TripwireScript> Trips = new List<TripwireScript>();
 
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,11 +24,19 @@ public class RoomControl : MonoBehaviour
     {
         Cams.Add(cscript);
     }
+    public void Register(TripwireScript tscript)
+    {
+        Trips.Add(tscript);
+    }
     public void Respawn()
     {
         foreach(SurveillanceCam cam in Cams)
         {
             cam.Respawn();
+        }
+        foreach (TripwireScript wire in Trips)
+        {
+            wire.Respawn();
         }
     }
     public void Ping(Vector2 pos)

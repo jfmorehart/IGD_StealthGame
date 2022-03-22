@@ -18,20 +18,20 @@ public class UIData : MonoBehaviour
     void Start()
     {
         int level = SceneManager.GetActiveScene().buildIndex;
-        leveltext.text = "Level " + (level + 1).ToString();
 
-        if ( level == 0)
+
+        if (level == 1)
         {
             PlayerPrefs.SetInt("deaths", 0);
             PlayerPrefs.SetFloat("timer", 0);
         }
-        else
-        {
-            deaths = PlayerPrefs.GetInt("deaths", 0);
-            timer = PlayerPrefs.GetFloat("timer", 0);
-        }
+
+        leveltext.text = "Level " + (level).ToString();
+        deaths = PlayerPrefs.GetInt("deaths", 0);
+        timer = PlayerPrefs.GetFloat("timer", 0);
         deathtext.text = deaths.ToString();
 
+        Debug.Log( level + " " + SceneManager.sceneCountInBuildSettings);
         if (level + 1 == SceneManager.sceneCountInBuildSettings)
         {
             //Last level

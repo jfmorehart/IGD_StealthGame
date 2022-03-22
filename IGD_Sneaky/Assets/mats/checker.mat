@@ -93,6 +93,7 @@ Material:
     - Color2: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _Tiling: {r: 10, g: 10, b: 0, a: 0}
     - _col1: {r: 1, g: 1, b: 1, a: 1}
     - _col2: {r: 1, g: 1, b: 1, a: 1}
     - col1: {r: 0.2924528, g: 0.2924528, b: 0.2924528, a: 1}

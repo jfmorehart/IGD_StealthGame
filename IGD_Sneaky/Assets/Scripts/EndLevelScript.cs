@@ -14,7 +14,7 @@ public class EndLevelScript : MonoBehaviour
     }
 
 
-    IEnumerator Fade()
+    public IEnumerator Fade()
     {
         Debug.Log("your love is fade");
         yield return new WaitForSeconds(1.8f);

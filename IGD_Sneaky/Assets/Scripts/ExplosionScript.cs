@@ -5,11 +5,24 @@ using UnityEngine;
 public class ExplosionScript : MonoBehaviour
 {
     private MeshRenderer ren;
+    private int myAlpha;
     // Start is called before the first frame update
     void Start()
     {
         ren = GetComponent<MeshRenderer>();
         StartCoroutine(Fade());
+        ren.material.SetFloat(myAlpha, 1);
+        if (ren.material.HasFloat("_CustomAlpha"))
+        {
+            myAlpha = Shader.PropertyToID("_CustomAlpha");
+            Debug.Log("got it");
+        }
+        else
+        {
+            Debug.Log("houston");
+        }
+
+
     }
 
     // Update is called once per frame
@@ -20,10 +33,11 @@ public class ExplosionScript : MonoBehaviour
 
     IEnumerator Fade()
     {
-        for(float alpha = 1; alpha > 0.02f; alpha *= 0.9f)
+        for(float alpha = 1f; alpha > 0.1f; alpha -= 2 * alpha * Time.deltaTime)
         {
-            ren.material.color = new Color(ren.material.color.r, ren.material.color.g, ren.material.color.b, alpha);
-            yield return null;
+            transform.localScale -= 2 * Time.deltaTime * transform.localScale;
+            ren.material.SetFloat(myAlpha, alpha);
+            yield return 0;
         }
         Destroy(gameObject);
         yield break;

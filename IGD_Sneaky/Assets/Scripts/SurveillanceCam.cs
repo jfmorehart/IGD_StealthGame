@@ -36,8 +36,17 @@ public class SurveillanceCam : MonoBehaviour
     private Light rlight;
     private bool notEmp;
 
-    // Start is called before the first frame update
-    void Start()
+    //Flicker
+    [SerializeField] private float flicker_baseIntensity;
+    [SerializeField] private float flicker_variance;
+    [SerializeField] private float flicker_modval;
+    [SerializeField] private float flicker_mult;
+    [SerializeField] private float flicker_mult2;
+    [SerializeField] private float flicker_min;
+
+
+// Start is called before the first frame update
+void Start()
     {
         Player = GameObject.FindGameObjectWithTag("Player");
         forward = transform.eulerAngles.z;
@@ -60,9 +69,7 @@ public class SurveillanceCam : MonoBehaviour
         notEmp = false;
         rlight.enabled = false;
         turnfraction = 0.1f;
-        Debug.Log("cam disabled");
         yield return new WaitForSeconds(disableTime);
-        Debug.Log("enabled");
         notEmp = true;
         rlight.enabled = true;
         turnfraction = 40f;
@@ -91,6 +98,7 @@ public class SurveillanceCam : MonoBehaviour
         float currot = Mathf.Atan2(-Rotater.transform.right.y, -Rotater.transform.right.x) * Mathf.Rad2Deg;
         if (Mathf.Abs(DifferenceFinder(deltarot, currot)) < lightWidthdeg)
         {
+            Debug.Log("player in vis");
             if (notEmp)
             {
                 playa.GetComponent<PlayerController>().SeeYa(gameObject);
@@ -98,8 +106,22 @@ public class SurveillanceCam : MonoBehaviour
         
         }
     }
+
+    void Flicker()
+    {
+        flicker_variance = Time.deltaTime * flicker_mult % flicker_modval;
+        rlight.intensity = (flicker_baseIntensity - flicker_variance * flicker_mult2);
+        if(rlight.intensity < flicker_min)
+        {
+            rlight.intensity = flicker_min;
+        }
+    }
+
     void Update()
     {
+        Flicker();
+
+
         if (state == 1)
         {
             Direction = forward + Mathf.Sin(timeval / Frequency) * AngleRange;
